@@ -62,23 +62,24 @@ function ManoEkskursijos() {
   return (
     <div>
       <h2>Mano ekskursijos</h2>
+      {/* <pre>{JSON.stringify(registracijos, null, 2)}</pre> */}
       {registracijos.length === 0 && <p>Neturite užsiregistravęs į ekskursijų.</p>}
       {registracijos.map(reg => (
         <div key={reg.id} style={{ border: "1px solid #ccc", margin: 8, padding: 8 }}>
-          <div><b>Pavadinimas:</b> {reg.pavadinimas}</div>
-          <div><b>Aprašymas:</b> {reg.aprasymas}</div>
-          <div><b>Kaina:</b> {reg.kaina} Eur</div>
-          <div>
-            <b>Ekskursijų datos nuo:</b> {new Date(reg.data1).toLocaleDateString()} <br />
-            <b>Ekskursijų datos iki:</b> {new Date(reg.data2).toLocaleDateString()} <br />
-            <b>Mano pasirinkta data:</b> {reg.pasirinkta_data ? new Date(reg.pasirinkta_data).toLocaleDateString() : "Nepasirinkta"} <br />
-            <input
-              type="date"
-              value={datos[reg.id] ?? reg.pasirinkta_data ?? ""}
-              onChange={e => setDatos({ ...datos, [reg.id]: e.target.value })}
-            />
-            <button onClick={() => handleUpdate(reg.id)}>Keisti datą</button>
-          </div>
+          <div><b>Pavadinimas:</b> {reg.ekskursija?.pavadinimas}</div>
+<div><b>Aprašymas:</b> {reg.ekskursija?.aprasymas}</div>
+<div><b>Kaina:</b> {reg.ekskursija?.kaina} Eur</div>
+<div>
+  <b>Ekskursijų datos nuo:</b> {reg.ekskursija?.data1 ? new Date(reg.ekskursija.data1).toLocaleDateString() : "Nenurodyta"} <br />
+  <b>Ekskursijų datos iki:</b> {reg.ekskursija?.data2 ? new Date(reg.ekskursija.data2).toLocaleDateString() : "Nenurodyta"} <br />
+  <b>Mano pasirinkta data:</b> {reg.pasirinkta_data ? new Date(reg.pasirinkta_data).toLocaleDateString() : "Nepasirinkta"} <br />
+  <input
+    type="date"
+    value={datos[reg.id] ?? reg.pasirinkta_data ?? ""}
+    onChange={e => setDatos({ ...datos, [reg.id]: e.target.value })}
+  />
+  <button onClick={() => handleUpdate(reg.id)}>Keisti datą</button>
+</div>
           <button onClick={() => handleDelete(reg.id)}>Atšaukti</button>
           {(reg.dalyvauta || (reg.pasirinkta_data && new Date(reg.pasirinkta_data) < new Date())) && (
             <form

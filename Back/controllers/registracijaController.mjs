@@ -1,6 +1,5 @@
 import {
   createRegistracija,
-  getVisosRegistracijos,
   getRegistracijosByUser,
   updateRegistracija,
   deleteRegistracija
@@ -15,14 +14,32 @@ export const newRegistracija = async (req, res) => {
     const registracija = await createRegistracija({ user_id, ekskursija_id, pasirinkta_data });
     res.status(201).json({ status: "success", data: { registracija } });
   } catch (error) {
-    console.error(error); // pridėk šitą, kad matytum klaidą terminale
+    console.error(error);
     res.status(500).json({ status: "fail", message: error.message });
   }
 };
 
+// Gauti visas savo registracijas su ekskursijos duomenimis
 export const getUserRegistracijos = async (req, res) => {
   try {
-    const registracijos = await getVisosRegistracijos();
+    const user_id = 1; // arba req.user.id jei turi autentifikaciją
+    const rows = await getRegistracijosByUser(user_id);
+
+    // Sudedam ekskursijos info į ekskursija objektą
+    const registracijos = rows.map(r => {
+      const { pavadinimas, aprasymas, kaina, data1, data2, ...rest } = r;
+      return {
+        ...rest,
+        ekskursija: {
+          pavadinimas,
+          aprasymas,
+          kaina,
+          data1,
+          data2,
+        }
+      };
+    });
+
     res.json({ status: "success", data: { registracijos } });
   } catch (error) {
     res.status(500).json({ status: "fail", message: error.message });

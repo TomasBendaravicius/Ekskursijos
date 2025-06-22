@@ -3,8 +3,9 @@ import {
   newRegistracija,
   getUserRegistracijos,
   editRegistracija,
-  removeRegistracija
-} from "../controllers/registracijaController.mjs";
+  removeRegistracija,
+ } from "../controllers/registracijaController.mjs";
+ 
 
 // Jei turi auth middleware, importuok jį
 // import { authenticateUser } from "../middleware/auth.mjs";

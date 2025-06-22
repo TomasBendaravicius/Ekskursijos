@@ -33,3 +33,37 @@ export const updateRegistracija = async (id, { komentaras, pasirinkta_data }) =>
 export const deleteRegistracija = async (id) => {
   await sql`DELETE FROM registracijos WHERE id = ${id}`;
 };
+
+
+
+
+export const getRegistracijos = async (req, res) => {
+  const rows = await sql`
+    SELECT r.*, 
+           e.pavadinimas, e.aprasymas, e.kaina, e.data1, e.data2
+    FROM registracijos r
+    JOIN ekskursios e ON r.ekskursija_id = e.id
+    WHERE r.user_id = ${req.user.id}
+  `;
+
+  console.log("SQL rows:", rows);
+  
+  const registracijos = rows.map(r => {
+    const { pavadinimas, aprasymas, kaina, data1, data2, ...rest } = r;
+    return {
+      ...rest,
+      ekskursija: {
+        pavadinimas,
+        aprasymas,
+        kaina,
+        data1,
+        data2,
+      }
+    };
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: { registracijos },
+  });
+};
