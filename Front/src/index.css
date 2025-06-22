@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+.active {
+  @apply bg-blue-300;
+}
+
+/* Pašalinta invoice- stiliai, jei jų nenaudoji, arba pervadink pagal savo projektą */
+
+.ekskursija-form {
+  @apply flex flex-col gap-4 p-6 m-5 bg-white rounded-lg shadow-md;
+}
+
+.ekskursiju-list {
+  @apply flex flex-col gap-4 p-6 m-5 bg-white rounded-lg shadow-md;
+}
+
+.ekskursija-card {
+  @apply flex justify-between border m-1 p-5 items-center gap-4 bg-white rounded-lg shadow-md;
+}
+
+.ekskursija-details {
+  @apply flex flex-col gap-3;
+}
+
+.ekskursija-actions {
+  @apply flex gap-10 ;
+}
+
+.btn {
+  @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700;
+}
